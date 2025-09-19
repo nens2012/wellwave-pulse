@@ -144,6 +144,7 @@ export default function Home() {
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                   <XAxis dataKey="day" className="text-xs" />
                   <YAxis className="text-xs" />
+                  <YAxis yAxisId="right" orientation="right" className="text-xs" />
                   <Tooltip />
                   <Line
                     type="monotone"
@@ -151,6 +152,7 @@ export default function Home() {
                     stroke="hsl(var(--primary))"
                     strokeWidth={2}
                     dot={{ r: 4 }}
+                    name="Weight (kg)"
                   />
                   <Line
                     type="monotone"
@@ -159,6 +161,7 @@ export default function Home() {
                     strokeWidth={2}
                     dot={{ r: 4 }}
                     yAxisId="right"
+                    name="Steps"
                   />
                 </LineChart>
               </ResponsiveContainer>
