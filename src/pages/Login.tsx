@@ -60,21 +60,21 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-wellness">
-      <div className="flex min-h-screen">
-        {/* Left Side - Motivational Slider (Desktop) / Top (Mobile) */}
-        <div className="hidden lg:block lg:w-1/2">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Gradient Mesh Background */}
+      <div className="gradient-mesh-bg" />
+      
+      {/* Responsive Layout Container */}
+      <div className="flex flex-col lg:flex-row min-h-screen">
+        {/* Top/Left Side - Motivational Slider */}
+        <div className="h-[40vh] lg:h-auto lg:w-1/2 relative">
+          <div className="absolute inset-0 glass-glow opacity-20" />
           <MotivationalSlider />
         </div>
 
-        {/* Mobile Slider */}
-        <div className="h-[40vh] lg:hidden">
-          <MotivationalSlider />
-        </div>
-
-        {/* Right Side - Login Form */}
+        {/* Bottom/Right Side - Login Form */}
         <div className="flex flex-1 items-center justify-center px-4 py-8 lg:w-1/2">
-          <div className="w-full max-w-md space-y-8">
+          <div className="w-full max-w-md space-y-8 glass-card p-8">
             <div className="text-center">
               <h1 className="text-4xl font-bold text-foreground">
                 Wellness Wave

@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Wellness Wave Design System - Light Blue Gradient Theme */
+    /* Wellness Wave Design System - Glassmorphism Theme */
     --background: 200 100% 99%;
     --foreground: 202 32% 15%;
     
@@ -39,7 +39,7 @@ All colors MUST be HSL.
     --input: 200 30% 92%;
     --ring: 199 89% 48%;
     
-    --radius: 0.75rem;
+    --radius: 1rem;
     
     /* Custom wellness colors */
     --wellness-blue: 199 89% 48%;
@@ -49,16 +49,28 @@ All colors MUST be HSL.
     --wellness-green: 142 70% 45%;
     --wellness-purple: 271 50% 60%;
     
+    /* Glassmorphism colors */
+    --glass-white: 0 0% 100%;
+    --glass-border: 0 0% 100%;
+    --glass-glow: 199 100% 70%;
+    
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(200 100% 94%), hsl(199 89% 82%));
     --gradient-wellness: linear-gradient(180deg, hsl(200 100% 97%), hsl(199 70% 88%));
     --gradient-hero: linear-gradient(135deg, hsl(199 89% 48%), hsl(184 64% 44%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(200 76% 98%));
+    --gradient-glass: linear-gradient(120deg, hsl(var(--glass-white) / 0.1), hsl(var(--glass-white) / 0.05));
+    --gradient-glow: linear-gradient(135deg, hsl(var(--wellness-blue) / 0.3), hsl(var(--wellness-purple) / 0.3));
+    --gradient-mesh: radial-gradient(at 20% 80%, hsl(var(--wellness-blue) / 0.2) 0px, transparent 50%),
+                     radial-gradient(at 80% 20%, hsl(var(--wellness-purple) / 0.2) 0px, transparent 50%),
+                     radial-gradient(at 40% 40%, hsl(var(--wellness-teal) / 0.1) 0px, transparent 50%);
     
     /* Shadows */
     --shadow-soft: 0 4px 20px -2px hsl(199 89% 48% / 0.1);
-    --shadow-glow: 0 0 40px hsl(199 89% 48% / 0.15);
+    --shadow-glow: 0 0 60px hsl(var(--glass-glow) / 0.3);
     --shadow-card: 0 10px 40px -10px hsl(202 32% 15% / 0.1);
+    --shadow-glass: 0 8px 32px 0 hsl(202 32% 15% / 0.37);
+    --shadow-glass-inset: inset 0 0 0 1px hsl(var(--glass-white) / 0.3);
     
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -94,11 +106,73 @@ All colors MUST be HSL.
     --input: 202 20% 20%;
     --ring: 199 89% 48%;
     
+    /* Dark mode glass adjustments */
+    --glass-white: 200 20% 98%;
+    --glass-border: 200 20% 98%;
+    --glass-glow: 199 100% 50%;
+    
     /* Dark mode gradients */
     --gradient-primary: linear-gradient(135deg, hsl(202 28% 20%), hsl(199 70% 30%));
     --gradient-wellness: linear-gradient(180deg, hsl(202 32% 12%), hsl(202 28% 20%));
     --gradient-hero: linear-gradient(135deg, hsl(199 89% 48%), hsl(184 64% 44%));
     --gradient-card: linear-gradient(145deg, hsl(202 28% 14%), hsl(202 28% 18%));
+    --gradient-glass: linear-gradient(120deg, hsl(var(--glass-white) / 0.05), hsl(var(--glass-white) / 0.02));
+  }
+}
+
+@layer components {
+  /* Glassmorphism styles */
+  .glass {
+    @apply backdrop-blur-xl border border-white/20;
+    background: linear-gradient(120deg, hsl(var(--glass-white) / 0.1), hsl(var(--glass-white) / 0.05));
+    box-shadow: var(--shadow-glass), var(--shadow-glass-inset);
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden;
+    background: linear-gradient(120deg, hsl(var(--glass-white) / 0.1), hsl(var(--glass-white) / 0.05));
+    box-shadow: var(--shadow-glass), var(--shadow-glass-inset);
+    position: relative;
+  }
+  
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      hsl(var(--glass-white) / 0.5), 
+      transparent
+    );
+  }
+  
+  .glass-glow {
+    @apply shadow-glow;
+  }
+  
+  .glass-input {
+    @apply glass px-4 py-2 rounded-xl border-white/30 focus:border-primary/50 transition-all;
+    background: hsl(var(--glass-white) / 0.05);
+  }
+  
+  .glass-button {
+    @apply glass px-6 py-3 rounded-xl font-medium transition-all hover:shadow-glow;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--primary) / 0.1));
+    border: 1px solid hsl(var(--primary) / 0.3);
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 20px hsl(var(--glass-glow) / 0.5);
+  }
+  
+  .gradient-mesh-bg {
+    background: var(--gradient-mesh);
+    position: fixed;
+    inset: 0;
+    z-index: -1;
   }
 }
 

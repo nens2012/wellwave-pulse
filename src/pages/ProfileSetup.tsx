@@ -11,18 +11,29 @@ import { useToast } from '@/hooks/use-toast';
 import { User, Activity, Heart, Target, ChevronRight } from 'lucide-react';
 import type { HealthConcern, FitnessGoal } from '@/types/wellness';
 
-const healthConcernOptions: { value: HealthConcern; label: string }[] = [
-  { value: 'none', label: 'None' },
-  { value: 'pcod', label: 'PCOD/PCOS' },
-  { value: 'diabetes', label: 'Diabetes' },
-  { value: 'stress', label: 'Stress/Anxiety' },
-  { value: 'obesity', label: 'Obesity' },
-  { value: 'hypertension', label: 'Hypertension' },
-  { value: 'back_pain', label: 'Back Pain' },
-  { value: 'thyroid', label: 'Thyroid Issues' },
-  { value: 'heart_disease', label: 'Heart Disease' },
-  { value: 'arthritis', label: 'Arthritis' },
-];
+const getHealthConcernOptions = (gender: 'male' | 'female'): { value: HealthConcern; label: string }[] => {
+  const baseOptions: { value: HealthConcern; label: string }[] = [
+    { value: 'none', label: 'None' },
+    { value: 'diabetes', label: 'Diabetes' },
+    { value: 'stress', label: 'Stress/Anxiety' },
+    { value: 'obesity', label: 'Obesity' },
+    { value: 'hypertension', label: 'Hypertension' },
+    { value: 'back_pain', label: 'Back Pain' },
+    { value: 'thyroid', label: 'Thyroid Issues' },
+    { value: 'heart_disease', label: 'Heart Disease' },
+    { value: 'arthritis', label: 'Arthritis' },
+  ];
+  
+  if (gender === 'female') {
+    return [
+      baseOptions[0],
+      { value: 'pcod' as HealthConcern, label: 'PCOD/PCOS' },
+      ...baseOptions.slice(1),
+    ];
+  }
+  
+  return baseOptions;
+};
 
 const fitnessGoalOptions: { value: FitnessGoal; label: string }[] = [
   { value: 'weight_gain', label: 'Weight Gain' },
@@ -270,7 +281,7 @@ export default function ProfileSetup() {
 
             {step === 2 && (
               <div className="space-y-3">
-                {healthConcernOptions.map((option) => (
+                {getHealthConcernOptions(formData.gender).map((option) => (
                   <div key={option.value} className="flex items-center space-x-2">
                     <Checkbox
                       id={option.value}
@@ -289,23 +300,24 @@ export default function ProfileSetup() {
             )}
 
             {step === 3 && (
-              <div className="space-y-3">
-                {fitnessGoalOptions.map((option) => (
-                  <div key={option.value} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={option.value}
-                      checked={formData.fitnessGoals.includes(option.value)}
-                      onCheckedChange={() => handleFitnessGoalToggle(option.value)}
-                    />
-                    <Label
-                      htmlFor={option.value}
-                      className="cursor-pointer font-normal"
-                    >
-                      {option.label}
-                    </Label>
-                  </div>
-                ))}
-              </div>
+              <RadioGroup 
+                value={formData.fitnessGoals[0] || ''}
+                onValueChange={(value) => setFormData({ ...formData, fitnessGoals: [value as FitnessGoal] })}
+              >
+                <div className="space-y-3">
+                  {fitnessGoalOptions.map((option) => (
+                    <div key={option.value} className="flex items-center space-x-2">
+                      <RadioGroupItem value={option.value} id={option.value} />
+                      <Label
+                        htmlFor={option.value}
+                        className="cursor-pointer font-normal"
+                      >
+                        {option.label}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+              </RadioGroup>
             )}
 
             <div className="flex justify-between pt-4">
