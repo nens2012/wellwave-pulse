@@ -12,6 +12,7 @@ import {
   createDailyPlan,
 } from '@/lib/wellness-recommendations';
 import { Activity, Heart, Brain, ArrowLeft, Clock, Zap } from 'lucide-react';
+import { UnifiedSchedule } from '@/components/UnifiedSchedule';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -60,27 +61,7 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value="daily" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Today's Schedule</CardTitle>
-                <CardDescription>Your personalized wellness routine</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {['morning', 'afternoon', 'evening'].map((time) => (
-                  <div key={time}>
-                    <h3 className="mb-2 font-semibold capitalize">{time}</h3>
-                    {recommendations.dailyPlan[time].map((activity: any, idx: number) => (
-                      <div key={idx} className="mb-2 rounded-lg bg-accent p-3">
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">{activity.activity.name}</span>
-                          <Badge variant="outline">{activity.duration}</Badge>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+            <UnifiedSchedule yoga={recommendations.yoga} exercises={recommendations.exercises} />
           </TabsContent>
 
           <TabsContent value="exercise" className="space-y-4">
@@ -144,6 +125,8 @@ export default function Dashboard() {
             ))}
           </TabsContent>
         </Tabs>
+        {/* Dashboard Additions: Screen Time and other health tiles */}
+        {/* Removed extra tiles per request */}
       </main>
     </div>
   );

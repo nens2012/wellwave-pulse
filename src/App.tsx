@@ -8,6 +8,8 @@ import ProfileSetup from "./pages/ProfileSetup";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import BPMeasure from "./pages/BPMeasure";
+import FoodScanner from "./pages/FoodScanner";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/profile-setup" element={<ProfileSetup />} />
           <Route path="/home" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/bp" element={<BPMeasure />} />
+          <Route path="/food-scanner" element={<FoodScanner />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
